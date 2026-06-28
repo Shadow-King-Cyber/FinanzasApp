@@ -1,0 +1,17 @@
+# FinanzasApp - Dependencias
+# Ejecutar: pip install -r requirements.txt
+
+# La interfaz usa Tkinter (incluido con Python)
+# La persistencia usa SQLite3 (incluido con Python)
+
+# Cifrado AES
+cryptography>=42.0.0
+
+# Copia al portapapeles
+pyperclip>=1.8.0
+
+# Para desarrollo
+pytest>=8.0.0
+
+# Para compilar a .exe (opcional)
+# pyinstaller>=6.0.0
