@@ -1,5 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
+import os
+import sys
 try:
     import pyperclip
 except ImportError:
@@ -14,12 +16,29 @@ class LoginDialog(tk.Tk):
         self.title("FinanzasApp — Inicio de sesión")
         self.geometry("420x420")
         self.resizable(False, False)
+        self._establecer_icono()
 
         self._cifrador = None
         self._usuario = None
         self._es_registro = not existe_cuenta()
 
         self._crear_interfaz()
+
+    @staticmethod
+    def _ruta_logo() -> str:
+        if getattr(sys, "frozen", False):
+            base = sys._MEIPASS
+        else:
+            base = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        return os.path.join(base, "assets", "logo.ico")
+
+    def _establecer_icono(self):
+        ruta = self._ruta_logo()
+        if os.path.exists(ruta):
+            try:
+                self.iconbitmap(ruta)
+            except Exception:
+                pass
 
     def _crear_interfaz(self):
         frame = ttk.Frame(self, padding=30)

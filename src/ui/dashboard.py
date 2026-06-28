@@ -4,6 +4,8 @@ from datetime import datetime, date, timedelta
 from typing import Optional, List
 import threading
 import calendar as cal_mod
+import os
+import sys
 
 from src.core.finanzas import (
     calcular_balance, aplicar_transaccion, resumen_por_categoria,
@@ -253,6 +255,7 @@ class Dashboard(tk.Tk):
         self.title("FinanzasApp — Control Financiero")
         self.geometry("1000x720")
         self.minsize(800, 600)
+        self._establecer_icono()
 
         self._cifrador = cifrador
         set_cifrador(cifrador)
@@ -284,6 +287,22 @@ class Dashboard(tk.Tk):
         self._actualizar_resumen()
 
         self.protocol("WM_DELETE_WINDOW", self._al_salir)
+
+    @staticmethod
+    def _ruta_logo() -> str:
+        if getattr(sys, "frozen", False):
+            base = sys._MEIPASS
+        else:
+            base = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        return os.path.join(base, "assets", "logo.ico")
+
+    def _establecer_icono(self):
+        ruta = self._ruta_logo()
+        if os.path.exists(ruta):
+            try:
+                self.iconbitmap(ruta)
+            except Exception:
+                pass
 
     def _recargar_categorias(self):
         self._categorias_cache = cargar_categorias()
