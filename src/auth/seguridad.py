@@ -88,7 +88,7 @@ def obtener_pista() -> str:
     return datos.get("pista", "")
 
 
-def recuperar_con_recovery(recovery: str) -> Fernet | None:
+def recuperar_con_recovery(recovery: str) -> tuple[Fernet, str, str] | None:
     if not existe_cuenta():
         return None
 

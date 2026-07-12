@@ -1371,7 +1371,7 @@ class Dashboard(tk.Tk):
     def _exportar_csv(self):
         from src.utils.helpers import exportar_csv
 
-        archivo = asksaveasfilename(defaultextension=".csv", filetypes=[("CSV", "*.csv")])
+        archivo = filedialog.asksaveasfilename(defaultextension=".csv", filetypes=[("CSV", "*.csv")])
         if archivo:
             transacciones = cargar_transacciones(self.cuenta_actual.id)
             exportar_csv(transacciones, archivo)
