@@ -30,16 +30,23 @@ def validar_numero(valor: str) -> float:
     return float(valor)
 
 
+def _sanitizar_csv(valor) -> str:
+    texto = str(valor)
+    if texto.startswith(("=", "+", "-", "@", "\t")):
+        return "'" + texto
+    return texto
+
+
 def exportar_csv(transacciones: List[Transaccion], archivo: str) -> None:
     with open(archivo, "w", newline="", encoding="utf-8-sig") as f:
         writer = csv.writer(f)
         writer.writerow(["ID", "Tipo", "Monto", "Descripción", "Categoría", "Fecha"])
         for t in transacciones:
             writer.writerow([
-                t.id or "",
-                t.tipo,
-                t.monto,
-                t.descripcion,
-                t.categoria,
-                formatear_fecha(t.fecha),
+                _sanitizar_csv(t.id or ""),
+                _sanitizar_csv(t.tipo),
+                _sanitizar_csv(t.monto),
+                _sanitizar_csv(t.descripcion),
+                _sanitizar_csv(t.categoria),
+                _sanitizar_csv(formatear_fecha(t.fecha)),
             ])
